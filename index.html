@@ -358,7 +358,7 @@ section[id]{scroll-margin-top:80px}#route{padding-top:clamp(50px,7vw,94px)}
 <dl class="stayFacts"><div><dt>Carina</dt><dd>CHF 24 · 已含房費</dd></div><div><dt>Sunstar</dt><dd>約 NT$992 · 另付</dd></div><div><dt>Ibis</dt><dd>另付 · 金額待確認</dd></div><div><dt>兩間 Agoda 住宿</dt><dd>城市稅未單列</dd></div></dl>
 <div class="stayConverter" id="stay-converter">
 <h4>住宿匯率換算 <small>FX CONVERTER</small></h4>
-<label class="fxOrder">帶入訂單 <select id="fx-order"><option value="custom">自訂金額</option><option value="L1">Waldstaetterhof · CHF 135.61</option><option value="G1">Jungfrau Lodge · USD 283.24</option><option value="G4">Sunstar · NT$28,025 含稅</option><option value="Z4">Carina · CHF 911.89 含城市稅</option><option value="U2">Ibis Styles · NT$4,449</option></select></label>
+<label class="fxOrder">帶入訂單 <select id="fx-order"><option value="custom">自訂金額</option><option value="L1" selected>Waldstaetterhof · CHF 135.61</option><option value="G1">Jungfrau Lodge · USD 283.24</option><option value="G4">Sunstar · NT$28,025 含稅</option><option value="Z4">Carina · CHF 911.89 含城市稅</option><option value="U2">Ibis Styles · NT$4,449</option></select></label>
 <div class="fxPair"><label>金額<input id="fx-amount" type="number" min="0" step="0.01" inputmode="decimal" value="135.61"></label><label>幣別<select id="fx-currency"><option value="CHF">CHF 瑞郎</option><option value="USD">USD 美金</option><option value="CNY">CNY 人民幣</option><option value="TWD">TWD 台幣</option></select></label></div>
 <div class="fxRates"><label>CHF 匯率<input id="fx-chf" type="number" min="0" step="0.001" inputmode="decimal" value="39.37"></label><label>USD 匯率<input id="fx-usd" type="number" min="0" step="0.001" inputmode="decimal" value="33"></label><label>CNY 匯率<input id="fx-cny" type="number" min="0" step="0.001" inputmode="decimal" value="4.963"></label></div>
 <output id="fx-result" for="fx-amount fx-currency fx-chf fx-usd fx-cny">約 NT$5,339</output>
@@ -373,6 +373,7 @@ document.querySelectorAll('[data-stay-gallery]').forEach(gallery => {
   const status = gallery.querySelector('[data-slide-status]');
   if (slides.length < 2) return;
   let active = 0, timer = null, visible = false, paused = false;
+  slides.forEach(slide => { slide.loading = 'eager'; });
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   function showSlide(index) {
     active = (index + slides.length) % slides.length;
@@ -387,8 +388,6 @@ document.querySelectorAll('[data-stay-gallery]').forEach(gallery => {
   controls.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', () => { showSlide(active + Number(button.dataset.slideStep)); stop(); start(); });
   });
-  gallery.addEventListener('mouseenter', () => { paused = true; stop(); });
-  gallery.addEventListener('mouseleave', () => { paused = false; start(); });
   gallery.addEventListener('focusin', () => { paused = true; stop(); });
   gallery.addEventListener('focusout', () => { paused = false; start(); });
   document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
@@ -409,7 +408,18 @@ document.querySelectorAll('[data-stay-gallery]').forEach(gallery => {
   function convert() {
     const rates = {TWD:1,CHF:Number(box.querySelector('#fx-chf').value),USD:Number(box.querySelector('#fx-usd').value),CNY:Number(box.querySelector('#fx-cny').value)};
     const n = Number(amount.value), rate = rates[currency.value];
-    result.textContent = amount.value !== '' && Number.isFinite(n) && n >= 0 && Number.isFinite(rate) && rate > 0 ? '約 ' + new Intl.NumberFormat('zh-TW',{style:'currency',currency:'TWD',maximumFractionDigits:0}).format(n*rate) : '請輸入有效金額與匯率';
+    result.textContent = amount.value !== '' && Number.isFinite(n) && n >= 0 && Number.isFinite(rate) && rate > 0 ? '約 ' + 'NT : '請輸入有效金額與匯率';
+  }
+  order.addEventListener('change', () => {
+    if (orders[order.value]) [amount.value,currency.value] = orders[order.value];
+    convert();
+  });
+  box.querySelectorAll('input,select').forEach(el => el.addEventListener('input', convert));
+  convert();
+})();
+</script>
+</body></html>
+ + new Intl.NumberFormat('zh-TW',{maximumFractionDigits:0}).format(n*rate) : '請輸入有效金額與匯率';
   }
   order.addEventListener('change', () => {
     if (orders[order.value]) [amount.value,currency.value] = orders[order.value];
