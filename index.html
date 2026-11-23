@@ -475,6 +475,17 @@ section[id]{scroll-margin-top:80px}#route{padding-top:clamp(50px,7vw,94px)}
 #guide .plugDiagram{max-width:190px;margin-bottom:9px}
 @media(max-width:900px){#guide .guide{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){#guide .guide{grid-template-columns:1fr}#guide .guideItem{min-height:0}}
+</style><style id="mobile-intro-type">
+/* Match the compact flight summary on phones while retaining desktop hierarchy. */
+@media(max-width:600px){
+  #route .intro,
+  #itinerary .sectionHead .intro,
+  #stays .sectionHead .intro,
+  #maya .railCopy .intro,
+  #cost .sectionHead .intro,
+  #cost .cost .intro,
+  #dm .winterIntro p{font-size:14px;line-height:1.65}
+}
 </style></head>
 <body>
 <nav class="nav" aria-label="網站導覽">
