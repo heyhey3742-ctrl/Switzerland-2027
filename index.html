@@ -317,6 +317,23 @@ ul.cover-route::before,ul.cover-route::after{background:#a8c1cd!important}
 #top+.cover-route .coverRouteGroup span,#top+.cover-route .coverRouteGroup b{color:#24465f!important}
 #top+.cover-route .coverRouteGroup span::before{color:#b18e4c!important}
 </style>
+<style id="cover-night-restore">
+/* Approved night cover: remove the later pale wash while preserving current layout. */
+.cover-winter{background:#081b2c!important;color:#f8efdc!important}
+.cover-winter::before{background:
+  linear-gradient(90deg,rgba(5,18,31,.72) 0%,rgba(5,18,31,.40) 34%,rgba(5,18,31,.06) 66%,rgba(5,18,31,.22) 100%),
+  linear-gradient(0deg,rgba(5,17,28,.52) 0%,rgba(5,17,28,.08) 48%,rgba(5,17,28,.20) 100%)!important}
+.cover-inner h1{color:#fff5df!important;text-shadow:0 3px 24px rgba(0,0,0,.34)!important}
+.cover-inner h1 span{color:#abdce6!important}
+.cover-kicker,.cover-title-zh,.cover-journey,.cover-cities{color:#f8efdc!important;text-shadow:0 2px 14px rgba(0,0,0,.42)!important}
+.cover-meta{color:#f8efdc!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;text-shadow:0 2px 14px rgba(0,0,0,.45)!important;backdrop-filter:none!important}
+.cover-actions a{border-color:rgba(248,239,220,.58)!important;color:#f8efdc!important;background:rgba(7,25,40,.16)!important}
+.cover-actions a:first-child{background:#f0deb5!important;border-color:#f0deb5!important;color:#142c40!important}
+.cover-actions a:hover{background:#fff7e5!important;border-color:#fff7e5!important;color:#142c40!important}
+@media(max-width:780px){
+  .cover-winter::before{background:linear-gradient(0deg,rgba(5,17,29,.94),rgba(5,17,29,.48) 58%,rgba(5,17,29,.08) 100%)!important}
+}
+</style>
 </head>
 <body>
 <nav class="nav" aria-label="網站導覽">
