@@ -408,18 +408,7 @@ document.querySelectorAll('[data-stay-gallery]').forEach(gallery => {
   function convert() {
     const rates = {TWD:1,CHF:Number(box.querySelector('#fx-chf').value),USD:Number(box.querySelector('#fx-usd').value),CNY:Number(box.querySelector('#fx-cny').value)};
     const n = Number(amount.value), rate = rates[currency.value];
-    result.textContent = amount.value !== '' && Number.isFinite(n) && n >= 0 && Number.isFinite(rate) && rate > 0 ? '約 ' + 'NT : '請輸入有效金額與匯率';
-  }
-  order.addEventListener('change', () => {
-    if (orders[order.value]) [amount.value,currency.value] = orders[order.value];
-    convert();
-  });
-  box.querySelectorAll('input,select').forEach(el => el.addEventListener('input', convert));
-  convert();
-})();
-</script>
-</body></html>
- + new Intl.NumberFormat('zh-TW',{maximumFractionDigits:0}).format(n*rate) : '請輸入有效金額與匯率';
+    result.textContent = amount.value !== '' && Number.isFinite(n) && n >= 0 && Number.isFinite(rate) && rate > 0 ? '約 ' + 'NT$' + new Intl.NumberFormat('zh-TW',{maximumFractionDigits:0}).format(n*rate) : '請輸入有效金額與匯率';
   }
   order.addEventListener('change', () => {
     if (orders[order.value]) [amount.value,currency.value] = orders[order.value];
